@@ -1,0 +1,12 @@
+{
+  "printWidth": 100,
+  "tabWidth": 2,
+  "eslintIntegration": true,
+  "semi": false,
+  "singleQuote": true,
+  "useTabs": false,
+  "trailingComma": "none",
+  "htmlWhitespaceSensitivity": "ignore",
+  "endOfLine": "lf",
+  "embeddedLanguageFormatting": "auto"
+}
