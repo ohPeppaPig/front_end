@@ -12,3 +12,7 @@ export function getSecondLevelDetail (id) {
 export function adjustFirstLevelCluster (id, number) {
     return instance.get(`/docs/findDocumentByTwoId/${id}/${number}`)
 }
+export function getDocumentDetail (id) {
+    return instance.get(`/docs/findDocumentDetail/${id}`)
+}
+
