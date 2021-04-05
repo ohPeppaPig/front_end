@@ -17,6 +17,7 @@ export default {
 body {
   margin: 0;
   padding: 0;
+  color: #606266;
 }
 a {
 	text-decoration: none;
