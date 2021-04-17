@@ -4,9 +4,12 @@
       <el-card>
         <el-tree
           :data="treeData"
+		  show-checkbox
+		  node-key="id"
           :expand-on-click-node="false"
           :props="{children: 'categoryTwo', label: 'sname'}"
           @node-click="handleNodeClick">
+		  
         </el-tree>
       </el-card>
     </el-aside>
@@ -20,6 +23,7 @@
 
 <script>
 import * as clusteringAPI from '@services/clustering.js'
+// import {EventBus} from '../utils/bus.js'
 
 export default {
   name: 'Clustering',
@@ -27,27 +31,32 @@ export default {
     return {
       treeData: [
         {
+		  sid: 1,
           sname: '一级 1',
-          sid: 1,
+          pid:0,
           categoryTwo: [{
+			sid: 1,  
             sname: '二级 1-1',
-            sid: 1
+			pid:1
           }]
-        },
+        },    
         {
-          sname: '一级 1',
+		  sid:2
+          sname: '二级 1',
+		  pid:0,
           categoryTwo: [{
-            sname: '二级 1-1',
-          }]
-        },
-        {
-          sname: '一级 1',
-          categoryTwo: [{
-            sname: '二级 1-1',
+			sid:1
+            sname: '二级 2-1',
+			pid:1
           }]
         }
-      ]
+      ],
+	  id:0
     }
+  },
+  mounted() {
+  	console.warn("111")
+	this.getTree()
   },
   methods: {
     handleNodeClick (val) {
@@ -59,10 +68,18 @@ export default {
       }
     },
     getTree () {
-      clusteringAPI.getTree().then(res => {
+	  if(this.$route.params.id){
+		  this.id = this.$route.params.id
+	  }else{
+		  this.id = 0
+	  }
+	  console.warn(this.id); // 这里是undefined
+      clusteringAPI.getTree(this.id).then(res => {
         // TODO 接口返回可能格式跟预想不一样
-        this.treeData = res || [];
-        const defaultId = this.treeData[0] && this.treeData[0].sid;
+        // this.treeData = res || [];
+		this.treeData = res
+        // const defaultId = this.treeData[0] && this.treeData[0].sid;
+		const defaultId = this.treeData[0].sid;
         this.$router.push({ path: `/clustering/first-level/${defaultId}` })
       }).catch(err => {
         console.log(err)
@@ -70,8 +87,13 @@ export default {
     }
   },
   created () {
+	// EventBus.$on('msg', (val) => {
+	//         this.id = val
+	//     });
+	
     this.getTree()
   }
+
 }
 </script>
 
@@ -94,4 +116,12 @@ export default {
     }
   }
 }
+ .custom-tree-node {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    padding-right: 8px;
+  }
 </style>

@@ -11,11 +11,15 @@
           <i class="el-icon-folder-opened"></i>
           <span>文档分类管理</span>
         </el-menu-item>
+		<el-menu-item index="/remarked">
+		  <i class="el-icon-folder-opened"></i>
+		  <span>文档批注</span>
+		</el-menu-item>
       </el-menu>
     </el-aside>
     <el-container>
-      <el-header class="header"></el-header>
-      <el-main class="main">
+      <!-- <el-header class="header"></el-header> -->
+      <el-main class="main" >
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -30,7 +34,8 @@ export default {
 
 <style lang="scss" scoped>
 .aside {
-  height: 100vh;
+  // height: 100vh;
+  height: 900px;
   background:#001628;
   .logo {
     height: 60px;

@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+// axios.defaults.withCredentials = true;//Cookie跨域
+axios.default.withCredentials = true;
 const instance  = axios.create({
-    baseURL: process.env.VUE_APP_DOMAIN,
+    baseURL: "http://localhost:8080/",
     timeout: 10000,
     withCredentials: true
 });

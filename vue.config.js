@@ -9,7 +9,7 @@ module.exports = {
     // 打开浏览器时的路径
     openPage: '',
     // 服务端口
-    port: 8080,
+    port: 8082,
     // 设置代理
     proxy: null
   },
