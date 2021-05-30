@@ -3,10 +3,14 @@
     <el-aside class="aside">
       <div class="logo">文档聚类平台</div>
       <el-menu background-color="#001628" text-color="#ffffff" active-text-color="#ffffa6" :router="true">
-        <el-menu-item index="/dashboard">
+		<!-- <el-menu-item index="/dashboard">
           <i class="el-icon-suitcase"></i>
           <span>工作台</span>
-        </el-menu-item>
+        </el-menu-item> -->
+		<el-menu-item index="/lable">
+		  <i class="el-icon-suitcase"></i>
+		  <span>首页</span>
+		</el-menu-item>
         <el-menu-item index="/clustering">
           <i class="el-icon-folder-opened"></i>
           <span>文档分类管理</span>
@@ -35,7 +39,7 @@ export default {
 <style lang="scss" scoped>
 .aside {
   // height: 100vh;
-  height: 900px;
+  height: 970px;
   background:#001628;
   .logo {
     height: 60px;

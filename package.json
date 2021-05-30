@@ -11,8 +11,8 @@
   "dependencies": {
     "axios": "^0.21.1",
     "echarts": "^5.0.2",
-    "element-ui": "^2.15.1",
-    "vue": "2.5.13",
+    "element-ui": "^2.13.0",
+    "vue": "2.6.0",
     "vue-router": "^3.1.1"
   },
   "devDependencies": {
@@ -38,7 +38,7 @@
     "stylus-loader": "^3.0.2",
     "vconsole": "^3.3.0",
     "video.js": "^7.6.5",
-    "vue-template-compiler": "2.5.13",
+    "vue-template-compiler": "2.6.0",
     "webpack-transform-modules-plugin": "^0.4.3"
   },
   "eslintConfig": {

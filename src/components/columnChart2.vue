@@ -1,7 +1,7 @@
 <template>
 	<!-- <div id="columnChart" :style="{width: 400px, height: 400px}"></div> -->
 	<div>
-		<div class="columnChart" id="columnChart" :style="{float:'left',width: '600px', height: '300px'}"></div>
+		<div class="columnChart" id="columnChart2" :style="{float:'left',width: '600px', height: '300px'}"></div>
 		<remark-form-dialog
 		:visible="visible"
 		:ids="ids"
@@ -37,7 +37,7 @@
 		methods:{
 			initChart(name,xData,yData){
 				var that = this;
-				let column = echarts.init(document.getElementById('columnChart'))
+				let column = echarts.init(document.getElementById('columnChart2'))
 				var  option = {
 				        backgroundColor: '#66CCFF',
 				        tooltip: {

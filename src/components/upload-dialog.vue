@@ -1,13 +1,13 @@
 <template>
   <el-dialog
-    title="数据详情"
+    title="上传待分析项目集"
     :visible.sync="visible"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
     width="600px"
     class="second-level-detail-dialog"
     @close="close">
-    <div>
+    <div style="margin-top: 30px;">
       <el-form ref="form" label-width="100px">
         <el-form-item label="项目名称">
           <el-input placeholder="请输入项目名称" v-model="name"></el-input>
@@ -22,7 +22,7 @@
       <el-upload
         class="upload-demo"
         drag
-        action="https://jsonplaceholder.typicode.com/posts/"
+        action="http://localhost:8080/docs/uploadFolder"
         multiple>
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -67,7 +67,7 @@ export default {
 		name:"",
 		remark:"",
 		keyWordsVisible:false,
-		id:1
+		id:0
     }
   },
   watch: {
@@ -78,7 +78,7 @@ export default {
     },
 	submit(){
 		this.keyWordsVisible=true,
-		this.id=1
+		this.id=0
 		this.close()
 	}
   }

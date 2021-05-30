@@ -1,13 +1,14 @@
 <template>
   <div class="first-level-detail-wrap">
     <div class="header">
-      <div class="document-name">一级分类名称：{{}}</div>
+     <div class="document-name" style="color: deeppink;">二级分类簇列表</div>
       <div class="param-wrap">
         <div>动态调整聚类：</div>
         <el-slider
           v-model="sliderParam"
           :format-tooltip="formatTooltip"
-          @change="handleSliderChange">
+          @change="handleSliderChange"
+		  style="width: 100px;">
         </el-slider>
       </div>
     </div>

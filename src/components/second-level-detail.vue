@@ -5,10 +5,18 @@
       <div class="document-desc">文档簇描述信息：{{}}</div> -->
     </div>
     <div class="main">
-      <el-table
+		<el-button type="success" v-show="this.multipleSelection.length > 1" size="mini" style="float: right;" icon="el-icon-s-promotion" @click="moveMulti()">
+		多个调整</el-button>      
+		<el-button type="success" style="float: right;" icon="el-icon-upload2">上传文档</el-button>
+		<el-table
         :data="tableData"
-		stripe=true
+		ref="multipleTable"
+		@selection-change="handleSelectionChange"
         style="width: 100%">
+		<el-table-column
+		  type="selection"
+		  width="55">
+		</el-table-column>
 		<el-table-column
 		  prop="id"
 		  label="id"
@@ -30,39 +38,15 @@
         <el-table-column
 		width="230">
           <template slot-scope="scope">
-		   <!-- <el-button
-			size="mini"
-			type="primary"
-			@click="detail(scope.row)">查看</el-button> -->
-			
-		   <!-- <el-button
-			size="mini"
-			type="success"
-			@click="remark(scope.row)">批注</el-button> -->
-			
-		<!-- 	<el-button
-			size="mini"
-			type="success"
-			@click="remark(scope.row)" v-show="scope.row.comment">显示</el-button> -->
 		
-			<el-tooltip class="item" effect="dark" placement="top-start">
-			   <!-- <el-button>上左</el-button> -->
-			   <div slot="content">{{scope.row.comment}}</div>
+<!-- 			<el-tooltip class="item" effect="dark" placement="top-start">
 			   <i class="el-icon-s-flag" v-show="scope.row.comment" style="font-size: 10px; margin-left: 50px;color:brown;">(1)</i>
-			   
-			</el-tooltip>
-		
-			
-			<!-- TODO 批注功能 :鼠标悬浮展示信息--> 
-			
-		<!-- 	<el-tooltip placement="top">
-			  <div slot="content">多行信息<br/>第二行信息</div>
-			  <el-button size="mini">Top</el-button>
 			</el-tooltip> -->
-            <!-- <el-link type="primary" @click="detail(scope.row)">查看  </el-link>
-			<el-link type="primary" @click="detail(scope.row)">编辑  </el-link>
-			<el-link type="primary" @click="detail(scope.row)">删除  </el-link> -->
+			
+			<el-button type="success" size="mini" icon="el-icon-s-promotion" @click="move(scope.row)" style="margin-left: 100px;">分类调整</el-button>
+			
           </template>
+		  
         </el-table-column>
       </el-table>
     </div>
@@ -94,18 +78,21 @@
       :detail="currentDetail"
       @close="detailDailogVisible = false">
     </second-level-detail-dialog>
-	<remark-form
-	:remarkVisible="remarkFormVisible"
-	:detail="currentDetail"
-	@close="remarkFormVisible = false">
-	</remark-form>
+	
+	<meum-select-dialog
+	:meumVisible="meumVisible"
+	:ids="arr"
+	@close="meumVisible = false">
+	</meum-select-dialog>
+	
+
   </div>
 </template>
 
 <script>
 import * as clusteringAPI from '@services/clustering.js'
 import SecondLevelDetailDialog from './second-level-detail-dialog.vue'
-import remarkForm from './remark-form.vue'
+import meumSelectDialog from "./meum-select-dialog.vue"
 
 
 export default {
@@ -122,15 +109,33 @@ export default {
 		  ],
       // similarData: [{}],
       detailDailogVisible: false,
-	  remarkFormVisible:false,
+	  meumVisible: false,
       currentDetail: null,
+	  multipleSelection: [],
+	  arr:[]
     }
   },
   components: {
     SecondLevelDetailDialog,
-	remarkForm
+	meumSelectDialog
   },
   methods: {
+	moveMulti(){
+		this.arr = []
+		for(var n = 0;n<this.multipleSelection.length;n++){
+			this.arr.push(this.multipleSelection[n].id)
+		}
+		console.warn(this.arr)
+		console.warn(this.arr[0])
+		this.meumVisible = true
+		// clusteringAPI.moveMulti(this.arr).then(res => {
+		//   // TODO 赋值二级分类簇表格信息
+		// 	this.arr = []
+		// 	console.warn(this.arr)
+		// }).catch(err => {
+		//   console.log(err)
+		// })
+	},
     detail (val) {
       this.currentDetail = val
       this.detailDailogVisible = true
@@ -143,10 +148,29 @@ export default {
         console.log(err)
       })
     },
+	move(val){
+		this.arr = []
+		this.arr.push(val.id)
+		this.meumVisible = true
+	},
 	remark(val){
 		this.currentDetail = val
 		this.remarkFormVisible = true
-	}
+	},
+	
+	toggleSelection(rows) {
+		if (rows) {
+		  rows.forEach(row => {
+			this.$refs.multipleTable.toggleRowSelection(row);
+		  });
+		} else {
+		  this.$refs.multipleTable.clearSelection();
+		}
+	  },
+	  handleSelectionChange(val) {
+		this.multipleSelection = val;
+	  }
+	
   },
   created () {
     const id = this.$route.params.id;

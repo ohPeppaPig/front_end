@@ -1,5 +1,5 @@
 <template>
-	<div id="myChart" :style="{width: '400px', height: '300px'}"></div>
+	<div id="myChart2" :style="{width: '400px', height: '300px'}"></div>
 
 </template>
 
@@ -26,7 +26,7 @@ export default {
 		// that.$emit("clickPie", param.dataIndex);
 	 //  })
       // 基于准备好的dom，初始化echarts实例
-      var myChart = echarts.init(document.getElementById('myChart'));
+      var myChart = echarts.init(document.getElementById('myChart2'));
       // 绘制图表
       myChart.setOption({
 		  

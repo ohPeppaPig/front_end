@@ -1,36 +1,13 @@
 <template>
   <div class="dashboard-wrap">
-	<!-- <div class="content"> -->
-		 <!-- <el-card shadow="always" style="padding-bottom: 20px;">
-		      <el-select  placeholder="历史文档" style="margin-right:30px">
-		      			 <el-option @click="keyWords(0)">
-		      			   <span style="float: left" @click="keyWords(0)">思目</span>
-		      			   <span style="float: right; color: #8492a6; font-size: 13px" @click="keyWords(0)">simu</span>
-		      			 </el-option>
-		      			 <el-option @click="keyWords(1)">
-		      			   <span style="float: left" @click="keyWords(1)">政策</span>
-		      			   <span style="float: right; color: #8492a6; font-size: 13px">government</span>
-		      			 </el-option>
-		        </el-select>
-		      <div style="float: right;">
-		      			 <el-button type="primary" @click="upload">上传文档<i class="el-icon-upload el-icon--right"></i></el-button>
-		      			 <el-button @click="customWords">自定义常用词</el-button>
-		      </div>
-		 </el-card> -->
-	 <!--  <div style="margin-bottom: 30px;">
-		  
-		
-	   </div> -->
-	<!-- </div> -->
-	
     <div class="current">
-      <div class="title">当前项目:<i style="color: brown;size: a5;">思目数据</i></div>
+      <div class="title">当前项目:<i>政府数据</i></div>
 	  
 	  <!-- 数量展示 -->
 	  <el-row class="panel-group" :gutter="40">
 	    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
 	      <div class="card-panel">
-	        <div class="card-panel-icon-wrapper icon-money "  @click="link('/clustering/first-level/6')">
+	        <div class="card-panel-icon-wrapper icon-money "  @click="link('/clustering/first-level/91')">
 	          <!-- <svg-icon icon-class="eye" class-name="card-panel-icon"/> -->
 				<i style="font-size:25px" class="el-icon-folder-opened"></i>
 	        </div>
@@ -88,13 +65,14 @@
 	    <el-col :xs="24" :sm="24" :lg="8">
 	      <div class="chart-wrapper">
 	        <!-- <pie-chart ></pie-chart> -->
-			<pie-chart ref="chart"/>
+			<pie-chart2 ref="chart2"/>
+			
 	      </div>
 	    </el-col>
 		<el-col :xs="24" :sm="24" :lg="8" style="margin-left: 50px;">
 		  <div class="chart-wrapper">
 			<!-- <chart-lint ref='chart_line_one'></chart-lint> -->
-			<column-chart ref='chart_line_one'></column-chart>
+			<column-chart2 ref='chart_line_one'></column-chart2>
 		  </div>
 		</el-col>
 	  </el-row>
@@ -150,35 +128,6 @@
 	 </el-table>	 
     </div>
 
-   <!-- <div class="history">
-      <div class="title">历史项目</div>
-      <div class="content">
-		  <el-row class="panel-group" :gutter="40">
-			  <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-				  <div class="card-panel">
-					<div class="card-panel-icon-wrapper" @click="btnClick('2')">
-						<i style="font-size:20px" class="el-icon-folder-opened"></i>
-					</div>
-					<div class="card-panel-description">
-					  <el-link type="primary" @click="keyWords(0)">思目数据分析</el-link>
-					</div>
-				  </div>
-			  </el-col>
-			  
-			  <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-				  <div class="card-panel">
-					<div class="card-panel-icon-wrapper" @click="btnClick('2')">
-						<i style="font-size:20px" class="el-icon-folder-opened"></i>
-					</div>
-					<div class="card-panel-description">
-						<el-link type="primary" @click="keyWords(1)">政府文档分析</el-link>
-					</div>
-				  </div>
-			  </el-col>
-		  </el-row>
-		 
-      </div>
-    </div> -->
     <upload-dialog
       :visible="uploadDialogVisible"
       @close="uploadDialogVisible = false">
@@ -216,31 +165,31 @@
 import * as clusteringAPI from '@services/clustering.js'	
 import UploadDialog from '@components/upload-dialog.vue'
 import reversedWords from '@components/reversed-words'
-import PieChart from '@components/pie-chart.vue'
+import PieChart2 from '@components/pie-chart2.vue'
 import ClassifyKeyWordsDialog from '@components/classify-keywords-dialog.vue'
 import chartLint from '@components/chartLint.vue'
-import columnChart from '@components/columnChart.vue'
+import columnChart2 from '@components/columnChart2.vue'
 // import docDetail from '@components/doc-detail.vue'
 import SecondLevelDetailDialog from '../components/second-level-detail-dialog.vue'
 
 
 export default {
-  name: 'Dashboard',
+  name: 'Dashboard2',
   mounted() {
-	this.chartDispaly()
-  	this.$refs.chart.initData(this.name,this.data)
+	// this.chartDispaly()
+  	this.$refs.chart2.initData(this.name,this.data)
 	const {name,xData,yData} = this
     console.log(this.$refs)
     this.$refs.chart_line_one.initChart(name,xData,yData)
   },
   data () {
     return {
+	  id:1,
 	  nums:{
 		oneCategory:1,
 		twoCategory:2,
 	    commentNums:3,
-		allDocNums:4,
-		id:5
+		allDocNums:4
 	  },
 	 //  cities: [{
 		// value: 'Beijing',
@@ -250,23 +199,28 @@ export default {
 		// label: '上海'
 	 //  }],
 	  tableData: [
-		{"id":13000312,"title":"【会议记录】2018年5月21日例会记录","categoryOne":"产品会议","categoryTwo":"周,计划,波,杜,物资","comment":"注释"},
-		{"id":13190750,"title":"【产学研教】共享雨伞硬件厂家调研","categoryOne":"产学研教","categoryTwo":"伞,服务,用户,科技,雨伞","comment":"123445的撒大"},
-		{"id":13240745,"title":"【产学研教】共享雨伞需求","categoryOne":"产学研教","categoryTwo":"伞,服务,用户,科技,雨伞","comment":"12"},
-		{"id":13291129,"title":"【 产学研教】共享雨伞H5需求","categoryOne":"产学研教","categoryTwo":"伞,服务,用户,科技,雨伞","comment":"dasd"}
-	  ],
+		  {"id":1,"title":"关于组织实施2020年互联网大数据类企业转型升级计划的通知","categoryOne":"工信厅","categoryTwo":"科技厅","comment":null},{"id":2,"title":"关于组织开展2020年度首批省星级上云企业认定工作的通知","categoryOne":"工信厅","categoryTwo":"申报,企业,材料,发展,云","comment":null},{"id":3,"title":"关于组织开展千企升级企业入库和2020年度省级专精特新小巨人企业申报推荐以及2017年度省级专精特新小巨人企业申报复核工作的通知","categoryOne":"工信厅","categoryTwo":"申报,企业,材料,发展,云","comment":null},{"id":4,"title":"关于组织开展推荐申报第二批国家专精特新“小巨人”企业的通知","categoryOne":"工信厅","categoryTwo":"申报,企业,材料,发展,云","comment":null},{"id":5,"title":"关于组织申报2020年江苏省小型微型企业创业创新示范基地的通知","categoryOne":"工信厅","categoryTwo":"申报,企业,材料,发展,云","comment":null}
+		  ],
       uploadDialogVisible: false,
 	  reversedWordsVisibke:false,
 	  keyWordsVisible:false,
 	  name:'备注记录数量',
-	  data:[{"sid":6,"name":"产学研教","value":56},{"sid":7,"name":"成长伙伴","value":15},{"sid":8,"name":"物资库","value":72},{"sid":9,"name":"产品会议","value":96},{"sid":10,"name":"盟客网","value":23},{"sid":11,"name":"智慧城市","value":23},{"sid":12,"name":"超级账号","value":228},{"sid":13,"name":"思目论坛","value":5},{"sid":14,"name":"需求记录清单","value":45},{"sid":15,"name":"培训相关","value":9},{"sid":16,"name":"盟客币","value":77},{"sid":17,"name":"旅游申请","value":7},{"sid":18,"name":"衣食住行","value":238}],
+	  data:[{"sid":91,"name":"企业 工业 互联网","value":16},
+	  {"sid":92,"name":"科技 创新 技术","value":15},
+	  {"sid":93,"name":"资金 补助 财政","value":13},
+	  {"sid":94,"name":"其他","value":3},
+	  // {"sid":94,"name":"财政厅/科技厅","value":1},
+	  // {"sid":95,"name":"财政厅/农业厅","value":1},
+	  // {"sid":96,"name":"财政厅/发改委","value":2},
+	  // {"sid":97,"name":"财政厅/农业厅","value":1},
+	  ],
 	  xData: ['0','2021-02', '2021-03', '2021-04', '2021-05'],
 	  yData: [0,10, 20, 15, 9],
 	  yData: [{value:0,id:[]},
-	  {value:10,id:[13000312, 13000322, 13010215, 13010542, 13020016, 13020053, 13020114, 13020130, 13020660]},
-	  {value:15,id:[13020660, 13030050, 13030051, 13030067, 13030351, 13040552, 13040554, 13040587, 13040635, 13041406, 13041408, 13041412, 13041470]},
-	  {value:8,id:[13041498, 13041522, 13041558, 13050315, 13050509, 13050622, 13080108]},
-	  {value:9,id:[13041498, 13041522, 13041558, 13050315, 13050509, 13050622, 13080108]}],
+	  {value:3,id:[1,2,3]},
+	  {value:5,id:[4,5,6,7,8]},
+	  {value:6,id:[9,10,11,12,13,14]},
+	  {value:9,id:[15,16,17,18,19,12,1,2,3,4,5]}],
 	  remarkFormVisible:false,
 	  currentDetail: null
     }
@@ -274,10 +228,10 @@ export default {
   components: {
     UploadDialog,
 	reversedWords,
-	PieChart,
+	PieChart2,
 	ClassifyKeyWordsDialog,
 	chartLint,
-	columnChart,
+	columnChart2,
 	// docDetail,
 	SecondLevelDetailDialog
   },
@@ -309,21 +263,21 @@ export default {
 			console.log(err)
 		  })
 	},
-	chartDispaly(){
-		clusteringAPI.adminChartDisplay(0).then(res => {
-			this.data=res
-		}).catch(err => {
-			console.log(err)
-		})
-	},
-	getRemarkedDocs() {
-	  clusteringAPI.findRemarkedDocs().then(res => {
+	// chartDispaly(){
+	// 	clusteringAPI.adminChartDisplay().then(res => {
+	// 		this.data=res
+	// 	}).catch(err => {
+	// 		console.log(err)
+	// 	})
+	// },
+	// getRemarkedDocs() {
+	//   clusteringAPI.findRemarkedDocs().then(res => {
 	    
-		this.tableData = res
-	  }).catch(err => {
-	    console.log(err)
-	  })
-	},
+	// 	this.tableData = res
+	//   }).catch(err => {
+	//     console.log(err)
+	//   })
+	// },
 	detail(val){
 		this.remarkFormVisible=true
 		this.currentDetail=val
@@ -331,10 +285,10 @@ export default {
 	
   },
   created () {
-	this.id=0
+	this.id=1
     this.statistics(this.id)
-	this.getRemarkedDocs()
-	this.chartDispaly()
+	// this.getRemarkedDocs()
+	// this.chartDispaly()
   }
 }
 </script>

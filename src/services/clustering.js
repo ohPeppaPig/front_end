@@ -18,8 +18,8 @@ export function getDocumentDetail (id) {
 export function getStatistics(id) {
     return instance.get(`/admin/statistics/${id}`)
 }
-export function adminChartDisplay() {
-    return instance.get(`/admin/chartDisplay`)
+export function adminChartDisplay(i) {
+    return instance.get(`/admin/chartDisplay/${i}`)
 }
 export function findComment(id) {
     return instance.get(`/docs/findComment/${id}`)
@@ -38,4 +38,19 @@ export function delComment(id) {
 }
 export function findKeyWords(id) {
     return instance.get(`/title/categoryOne/${id}`)
+}
+export function updateCategory(id,twoId) {
+    return instance.post(`/docs/updateCategory/${id}/${twoId}`)
+}
+export function updateTitleName(id,name) {
+    return instance.post(`/title/updateTitleName/${id}/${name}`)
+}
+export function moveMulti(arr) {
+    return instance.post(`/docs/moveMulti/${arr}`)
+}
+export function findComments(arr) {
+    return instance.get(`/comment/findComments/${arr}`)
+}
+export function displayCategory2(id) {
+    return instance.get(`/title/categoryOne2/${id}`)
 }
